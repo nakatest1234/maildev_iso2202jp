@@ -1,0 +1,19 @@
+version: '3'
+services:
+  maildev:
+    container_name: maildev
+    build:
+      context:    ./build
+    image: common/maildev:latest
+    ports:
+      - "10025:25"
+    expose:
+      - "80"
+      - "25"
+    environment:
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-$USER.example.com}
+    restart: always
+networks:
+  default:
+    external:
+      name: nginx_proxy
